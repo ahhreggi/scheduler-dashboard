@@ -67,7 +67,7 @@ class Dashboard extends Component {
             onSelect={event => this.selectPanel(panel.id)}
           />
         );
-      })
+      });
 
     return <main className={dashboardClasses}>{panels}</main>;
   }
