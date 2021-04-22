@@ -31,7 +31,8 @@ const data = [
 class Dashboard extends Component {
 
   state = {
-    loading: false
+    loading: false,
+    focused: null // null (4-panel view) or id = 1-4 (1-panel view)
   };
 
   render() {
@@ -41,16 +42,26 @@ class Dashboard extends Component {
       return <Loading />;
     }
 
-    const panels = data.map(panel => {
-      return (
-        <Panel
-          key={panel.id}
-          id={panel.id}
-          label={panel.label}
-          value={panel.value}
-        />
-      );
-    })
+    const panels = data
+      // Filter panel data (all of none focused, or only 1 panel if id is specified)
+      .filter(panel => {
+        return this.state.focused === null || this.state.focused === panel.id
+      })
+      // Convert panel(s) into components
+      .map(panel => {
+        const dashboardClasses = classnames("dashboard", {
+          "dashboard--focused": this.state.focused
+        })
+        return (
+          <Panel
+            key={panel.id}
+            id={panel.id}
+            label={panel.label}
+            value={panel.value}
+            className={dashboardClasses}
+          />
+        );
+      })
 
     return <main className={dashboardClasses}>{panels}</main>;
   }
