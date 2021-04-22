@@ -35,6 +35,12 @@ class Dashboard extends Component {
     focused: null // null (4-panel view) or id = 1-4 (1-panel view)
   };
 
+  selectPanel(id) {
+    this.setState({
+      focused: id
+    });
+  }
+
   render() {
     const dashboardClasses = classnames("dashboard");
 
